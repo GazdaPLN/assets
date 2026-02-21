@@ -37,7 +37,7 @@ var (
 		"blog":          "", // Blog, inny niż medium.
 		"forum":         "", // Strona społeczności.
 		"docs":          "",
-		"source_code":   "", // Inny niż github.
+		"source_code":   "", // Inny niż GitHub.
 	}
 
 	whiteSpaceCharacters = []string{"\n", "  "}

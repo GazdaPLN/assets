@@ -62,12 +62,12 @@ func CreateAssetInfoJSONTemplate(token string) error {
 
 	_, err = f.Write(bytes)
 	if err != nil {
-		return fmt.Errorf("nie udało się zapisać bajtów do pliku")
+		return fmt.Errorf("nie udało się zapisać bajtów do pliku: %w", err)
 	}
 
 	err = libFile.FormatJSONFile(assetInfoPath)
 	if err != nil {
-		return fmt.Errorf("nie udało się sformatować pliku json")
+		return fmt.Errorf("nie udało się sformatować pliku json: %w", err)
 	}
 
 	return nil

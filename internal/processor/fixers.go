@@ -33,13 +33,13 @@ func (s *Service) FixETHAddressChecksum(f *file.AssetFile) error {
 	if err != nil {
 		checksum, e := address.EIP55Checksum(assetDir)
 		if e != nil {
-			return fmt.Errorf("nie udało się obliczyć sumy kontrolnej: %s", e)
+			return fmt.Errorf("nie udało się obliczyć sumy kontrolnej: %w", e)
 		}
 
 		newName := path.GetAssetPath(f.Chain().Handle, checksum)
 
 		if e = os.Rename(f.Path(), newName); e != nil {
-			return fmt.Errorf("nie udało się zmienić nazwy katalogu: %s", e)
+			return fmt.Errorf("nie udało się zmienić nazwy katalogu: %w", e)
 		}
 
 		s.fileService.UpdateFile(f, checksum)
