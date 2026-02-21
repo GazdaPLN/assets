@@ -41,7 +41,7 @@ var (
 	}
 	checkCmd = &cobra.Command{
 		Use:   "check",
-		Short: " Execute validation checks",
+		Short: "Wykonaj sprawdzenia walidacyjne",
 		Run: func(cmd *cobra.Command, args []string) {
 			assetsService := InitAssetsService()
 			assetsService.RunJob(assetsService.Check)
@@ -49,7 +49,7 @@ var (
 	}
 	fixCmd = &cobra.Command{
 		Use:   "fix",
-		Short: "Perform automatic fixes where possible",
+		Short: "Wykonaj automatyczne poprawki tam, gdzie to możliwe",
 		Run: func(cmd *cobra.Command, args []string) {
 			assetsService := InitAssetsService()
 			assetsService.RunJob(assetsService.Fix)
@@ -57,7 +57,7 @@ var (
 	}
 	updateAutoCmd = &cobra.Command{
 		Use:   "update-auto",
-		Short: "Run automatic updates from external sources",
+		Short: "Uruchom automatyczne aktualizacje z zewnętrznych źródeł",
 		Run: func(cmd *cobra.Command, args []string) {
 			assetsService := InitAssetsService()
 			assetsService.RunUpdateAuto()
@@ -66,22 +66,22 @@ var (
 
 	addTokenCmd = &cobra.Command{
 		Use:   "add-token",
-		Short: "Creates info.json template for the asset",
+		Short: "Tworzy szablon info.json dla zasobu",
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) != 1 {
-				log.Fatal("1 argument was expected")
+				log.Fatal("Oczekiwano 1 argumentu")
 			}
 
 			err := CreateAssetInfoJSONTemplate(args[0])
 			if err != nil {
-				log.Fatalf("Can't create asset info json template: %v", err)
+				log.Fatalf("Nie można utworzyć szablonu info.json zasobu: %v", err)
 			}
 		},
 	}
 
 	addTokenlistCmd = &cobra.Command{
 		Use:   "add-tokenlist",
-		Short: "Adds token to tokenlist.json",
+		Short: "Dodaje token do tokenlist.json",
 		Run: func(cmd *cobra.Command, args []string) {
 			handleAddTokenList(args, path.TokenlistDefault)
 		},
@@ -89,7 +89,7 @@ var (
 
 	addTokenlistExtendedCmd = &cobra.Command{
 		Use:   "add-tokenlist-extended",
-		Short: "Adds token to tokenlist-extended.json",
+		Short: "Dodaje token do tokenlist-extended.json",
 		Run: func(cmd *cobra.Command, args []string) {
 			handleAddTokenList(args, path.TokenlistExtended)
 		},
@@ -98,22 +98,22 @@ var (
 
 func handleAddTokenList(args []string, tokenlistType path.TokenListType) {
 	if len(args) != 1 {
-		log.Fatal("1 argument was expected")
+		log.Fatal("Oczekiwano 1 argumentu")
 	}
 
 	c, tokenID, err := asset.ParseID(args[0])
 	if err != nil {
-		log.Fatalf("Can't parse token: %v", err)
+		log.Fatalf("Nie można przetworzyć tokena: %v", err)
 	}
 
 	chain, ok := coin.Coins[c]
 	if !ok {
-		log.Fatal("Invalid token")
+		log.Fatal("Nieprawidłowy token")
 	}
 
 	err = AddTokenToTokenListJSON(chain, args[0], tokenID, tokenlistType)
 	if err != nil {
-		log.Fatalf("Can't add token: %v", err)
+		log.Fatalf("Nie można dodać tokena: %v", err)
 	}
 }
 
@@ -131,7 +131,7 @@ func InitAssetsService() *service.Service {
 
 	paths, err := file.ReadLocalFileStructure(root, config.Default.ValidatorsSettings.RootFolder.SkipFiles)
 	if err != nil {
-		log.WithError(err).Fatal("Failed to load file structure.")
+		log.WithError(err).Fatal("Nie udało się załadować struktury plików.")
 	}
 
 	paths = filter(paths, func(path string) bool {
@@ -152,19 +152,19 @@ func InitAssetsService() *service.Service {
 
 func setup() {
 	if err := config.SetConfig(configPath); err != nil {
-		log.WithError(err).Fatal("Failed to set config.")
+		log.WithError(err).Fatal("Nie udało się ustawić konfiguracji.")
 	}
 
 	logLevel, err := log.ParseLevel(config.Default.App.LogLevel)
 	if err != nil {
-		log.WithError(err).Fatal("Failed to parse log level.")
+		log.WithError(err).Fatal("Nie udało się przetworzyć poziomu logowania.")
 	}
 
 	log.SetLevel(logLevel)
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
+// Execute dodaje wszystkie podpolecenia do polecenia głównego i odpowiednio ustawia flagi.
+// Jest wywoływane przez main.main(). Musi zostać wykonane tylko raz dla rootCmd.
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {

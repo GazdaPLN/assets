@@ -19,61 +19,61 @@ func NewService(fileProvider *file.Service) *Service {
 }
 
 func (s *Service) GetValidator(f *file.AssetFile) []Validator {
-	jsonValidator := Validator{Name: "JSON validation", Run: s.ValidateJSON}
+	jsonValidator := Validator{Name: "Walidacja JSON", Run: s.ValidateJSON}
 
 	switch f.Type() {
 	case file.TypeAssetFolder:
 		return []Validator{
-			{Name: "Each asset folder has valid asset address and contains only allowed files", Run: s.ValidateAssetFolder},
+			{Name: "Każdy folder zasobu ma prawidłowy adres i zawiera tylko dozwolone pliki", Run: s.ValidateAssetFolder},
 		}
 	case file.TypeChainFolder:
 		return []Validator{
-			{Name: "Chain folders are lowercase and contains only allowed files", Run: s.ValidateChainFolder},
+			{Name: "Foldery łańcucha są pisane małymi literami i zawierają tylko dozwolone pliki", Run: s.ValidateChainFolder},
 		}
 	case file.TypeChainInfoFolder:
 		return []Validator{
-			{Name: "Chain Info Folder (has files)", Run: s.ValidateInfoFolder},
+			{Name: "Folder info łańcucha (zawiera pliki)", Run: s.ValidateInfoFolder},
 		}
 	case file.TypeDappsFolder:
 		return []Validator{
-			{Name: "Dapps folder contains only allowed png files in lowercase", Run: s.ValidateDappsFolder},
+			{Name: "Folder dapps zawiera tylko dozwolone pliki png pisane małymi literami", Run: s.ValidateDappsFolder},
 		}
 	case file.TypeRootFolder:
 		return []Validator{
-			{Name: "Root folder contains only allowed files", Run: s.ValidateRootFolder},
+			{Name: "Folder główny zawiera tylko dozwolone pliki", Run: s.ValidateRootFolder},
 		}
 	case file.TypeValidatorsAssetFolder:
 		return []Validator{
-			{Name: "Validators asset folder has logo and valid asset address)", Run: s.ValidateValidatorsAssetFolder},
+			{Name: "Folder zasobu walidatorów posiada logo i prawidłowy adres)", Run: s.ValidateValidatorsAssetFolder},
 		}
 
 	case file.TypeAssetLogoFile, file.TypeChainLogoFile, file.TypeDappsLogoFile, file.TypeValidatorsLogoFile:
 		return []Validator{
-			{Name: "Logos size and dimension are valid", Run: s.ValidateImage},
+			{Name: "Rozmiar i wymiary logo są prawidłowe", Run: s.ValidateImage},
 		}
 	case file.TypeAssetInfoFile:
 		return []Validator{
 			jsonValidator,
-			{Name: "Asset info file is valid", Run: s.ValidateAssetInfoFile},
+			{Name: "Plik info zasobu jest prawidłowy", Run: s.ValidateAssetInfoFile},
 		}
 	case file.TypeChainInfoFile:
 		return []Validator{
-			{Name: "Chain info file is valid", Run: s.ValidateChainInfoFile},
+			{Name: "Plik info łańcucha jest prawidłowy", Run: s.ValidateChainInfoFile},
 		}
 	case file.TypeTokenListFile:
 		return []Validator{
 			jsonValidator,
-			{Name: "Tokenlist file is valid", Run: s.ValidateTokenListFile},
+			{Name: "Plik tokenlist jest prawidłowy", Run: s.ValidateTokenListFile},
 		}
 	case file.TypeTokenListExtendedFile:
 		return []Validator{
 			jsonValidator,
-			{Name: "Tokenlist Extended file is valid", Run: s.ValidateTokenListExtendedFile},
+			{Name: "Rozszerzony plik tokenlist jest prawidłowy", Run: s.ValidateTokenListExtendedFile},
 		}
 	case file.TypeValidatorsListFile:
 		return []Validator{
 			jsonValidator,
-			{Name: "Validators list file is valid", Run: s.ValidateValidatorsListFile},
+			{Name: "Plik listy walidatorów jest prawidłowy", Run: s.ValidateValidatorsListFile},
 		}
 	}
 
@@ -82,28 +82,28 @@ func (s *Service) GetValidator(f *file.AssetFile) []Validator {
 
 func (s *Service) GetFixers(f *file.AssetFile) []Fixer {
 	jsonFixer := Fixer{
-		Name: "Formatting all json files",
+		Name: "Formatowanie wszystkich plików json",
 		Run:  s.FixJSON,
 	}
 
 	switch f.Type() {
 	case file.TypeAssetFolder:
 		return []Fixer{
-			{Name: "Renaming EVM's asset folder to valid address checksum", Run: s.FixETHAddressChecksum},
+			{Name: "Zmiana nazwy folderu zasobu EVM na prawidłową sumę kontrolną adresu", Run: s.FixETHAddressChecksum},
 		}
 	case file.TypeAssetInfoFile:
 		return []Fixer{
 			jsonFixer,
-			{Name: "Fixing asset info.json files", Run: s.FixAssetInfo},
+			{Name: "Naprawa plików info.json zasobu", Run: s.FixAssetInfo},
 		}
 	case file.TypeChainInfoFile:
 		return []Fixer{
 			jsonFixer,
-			{Name: "Fixing chain info.json files", Run: s.FixChainInfoJSON},
+			{Name: "Naprawa plików info.json łańcucha", Run: s.FixChainInfoJSON},
 		}
 	case file.TypeChainLogoFile, file.TypeAssetLogoFile, file.TypeValidatorsLogoFile, file.TypeDappsLogoFile:
 		return []Fixer{
-			{Name: "Resizing and compressing logo images", Run: s.FixLogo},
+			{Name: "Zmiana rozmiaru i kompresja obrazów logo", Run: s.FixLogo},
 		}
 	case file.TypeValidatorsListFile:
 		return []Fixer{

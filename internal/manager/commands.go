@@ -19,12 +19,12 @@ import (
 func CreateAssetInfoJSONTemplate(token string) error {
 	c, tokenID, err := asset.ParseID(token)
 	if err != nil {
-		return fmt.Errorf("failed to parse token id: %v", err)
+		return fmt.Errorf("nie udało się przetworzyć id tokena: %v", err)
 	}
 
 	chain, ok := coin.Coins[c]
 	if !ok {
-		return fmt.Errorf("invalid token")
+		return fmt.Errorf("nieprawidłowy token")
 	}
 
 	assetInfoPath := path.GetAssetInfoPath(chain.Handle, tokenID)
@@ -51,23 +51,23 @@ func CreateAssetInfoJSONTemplate(token string) error {
 
 	bytes, err := json.Marshal(&assetInfoModel)
 	if err != nil {
-		return fmt.Errorf("failed to marshal json: %v", err)
+		return fmt.Errorf("nie udało się serializować json: %v", err)
 	}
 
 	f, err := libFile.CreateFileWithPath(assetInfoPath)
 	if err != nil {
-		return fmt.Errorf("failed to create file: %v", err)
+		return fmt.Errorf("nie udało się utworzyć pliku: %v", err)
 	}
 	defer f.Close()
 
 	_, err = f.Write(bytes)
 	if err != nil {
-		return fmt.Errorf("failed to write bytes to file")
+		return fmt.Errorf("nie udało się zapisać bajtów do pliku")
 	}
 
 	err = libFile.FormatJSONFile(assetInfoPath)
 	if err != nil {
-		return fmt.Errorf("failed to format json file")
+		return fmt.Errorf("nie udało się sformatować pliku json")
 	}
 
 	return nil
@@ -76,7 +76,7 @@ func CreateAssetInfoJSONTemplate(token string) error {
 func AddTokenToTokenListJSON(chain coin.Coin, assetID, tokenID string, tokenListType path.TokenListType) error {
 	setup()
 
-	// Check for duplicates.
+	// Sprawdź duplikaty.
 	tokenListTypes := []path.TokenListType{path.TokenlistDefault, path.TokenlistExtended}
 	for _, t := range tokenListTypes {
 		tokenListPath := path.GetTokenListPath(chain.Handle, t)
@@ -84,12 +84,12 @@ func AddTokenToTokenListJSON(chain coin.Coin, assetID, tokenID string, tokenList
 
 		err := libFile.ReadJSONFile(tokenListPath, &list)
 		if err != nil {
-			return fmt.Errorf("failed to read data from %s: %w", tokenListPath, err)
+			return fmt.Errorf("nie udało się odczytać danych z %s: %w", tokenListPath, err)
 		}
 
 		for _, item := range list.Tokens {
 			if item.Asset == assetID {
-				return fmt.Errorf("duplicate asset, already exist in %s", tokenListPath)
+				return fmt.Errorf("duplikat zasobu, już istnieje w %s", tokenListPath)
 			}
 		}
 	}
@@ -99,12 +99,12 @@ func AddTokenToTokenListJSON(chain coin.Coin, assetID, tokenID string, tokenList
 
 	err := libFile.ReadJSONFile(tokenListPath, &list)
 	if err != nil {
-		return fmt.Errorf("failed to read data from %s: %w", tokenListPath, err)
+		return fmt.Errorf("nie udało się odczytać danych z %s: %w", tokenListPath, err)
 	}
 
 	assetInfo, err := getAssetInfo(chain, tokenID)
 	if err != nil {
-		return fmt.Errorf("failed to get token info: %w", err)
+		return fmt.Errorf("nie udało się pobrać informacji o tokenie: %w", err)
 	}
 
 	newToken := tokenlist.Token{
@@ -138,7 +138,7 @@ func getAssetInfo(chain coin.Coin, tokenID string) (*info.AssetModel, error) {
 
 	err := libFile.ReadJSONFile(path, &assetModel)
 	if err != nil {
-		return nil, fmt.Errorf("failed to read data from info.json: %w", err)
+		return nil, fmt.Errorf("nie udało się odczytać danych z info.json: %w", err)
 	}
 
 	return &assetModel, nil

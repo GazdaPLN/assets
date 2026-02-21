@@ -10,7 +10,7 @@ import (
 	"github.com/trustwallet/go-primitives/types"
 )
 
-// Asset info specific validators.
+// Walidatory specyficzne dla informacji o zasobie.
 
 func ValidateAssetRequiredKeys(a AssetModel) error {
 	var fields []string
@@ -87,7 +87,7 @@ func ValidateAssetDecimalsAccordingType(assetType string, decimals int) error {
 	return nil
 }
 
-// CoinModel info specific validators.
+// Walidatory specyficzne dla modelu CoinModel.
 
 func ValidateCoinRequiredKeys(c CoinModel) error {
 	var fields []string
@@ -179,7 +179,7 @@ func ValidateTags(tags, allowedTags []string) error {
 	return nil
 }
 
-// Both infos can be validated by this validators.
+// Oba typy informacji mogą być walidowane przez te walidatory.
 
 func ValidateDecimals(decimals int) error {
 	if decimals > 30 || decimals < 0 {

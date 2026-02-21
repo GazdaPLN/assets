@@ -26,18 +26,18 @@ var (
 		"whitepaper":    "",
 		"x":             "https://x.com/",
 		"telegram":      "https://t.me/",
-		"telegram_news": "https://t.me/", // Read-only announcement channel.
-		"medium":        "",              // URL contains 'medium.com'.
+		"telegram_news": "https://t.me/", // Kanał ogłoszeń tylko do odczytu.
+		"medium":        "",              // URL zawiera 'medium.com'.
 		"discord":       "https://discord.com/",
 		"reddit":        "https://reddit.com/",
 		"facebook":      "https://facebook.com/",
 		"youtube":       "https://youtube.com/",
 		"coinmarketcap": "https://coinmarketcap.com/",
 		"coingecko":     "https://coingecko.com/",
-		"blog":          "", // Blog, other than medium.
-		"forum":         "", // Community site.
+		"blog":          "", // Blog, inny niż medium.
+		"forum":         "", // Strona społeczności.
 		"docs":          "",
-		"source_code":   "", // Other than github.
+		"source_code":   "", // Inny niż github.
 	}
 
 	whiteSpaceCharacters = []string{"\n", "  "}

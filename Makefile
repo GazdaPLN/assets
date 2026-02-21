@@ -1,46 +1,46 @@
 #! /usr/bin/make -f
 
-# Project variables.
+# Zmienne projektu.
 VERSION := $(shell git describe --tags 2>/dev/null || git describe --all)
 BUILD := $(shell git rev-parse --short HEAD)
 PROJECT_NAME := $(shell basename "$(PWD)")
 BUILD_TARGETS := $(shell find cmd -name \*main.go | awk -F'/' '{print $$0}')
 
-# Use linker flags to provide version/build settings
+# Użyj flag linkera, aby podać ustawienia wersji/kompilacji
 LDFLAGS=-ldflags "-X=main.Version=$(VERSION) -X=main.Build=$(BUILD)"
 
-# Make is verbose in Linux. Make it silent.
+# Make jest gadatliwy w Linux. Ustaw tryb cichy.
 MAKEFLAGS += --silent
 
-# Go files.
+# Pliki Go.
 GOFMT_FILES?=$$(find . -name '*.go' | grep -v vendor)
 
-# Common commands.
+# Podstawowe polecenia.
 all: fmt lint test
 
 build:
-	@echo "  >  Building main.go to bin/assets"
+	@echo "  >  Budowanie main.go do bin/assets"
 	go build $(LDFLAGS) -o bin/assets ./cmd
 
 test:
-	@echo "  >  Running unit tests"
+	@echo "  >  Uruchamianie testów jednostkowych"
 	go test -cover -race -coverprofile=coverage.txt -covermode=atomic -v ./...
 
 fmt:
-	@echo "  >  Format all go files"
+	@echo "  >  Formatowanie wszystkich plików go"
 	gofmt -w ${GOFMT_FILES}
 
 lint-install:
 ifeq (,$(wildcard test -f bin/golangci-lint))
-	@echo "  >  Installing golint"
+	@echo "  >  Instalowanie golint"
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- v1.50.1
 endif
 
 lint: lint-install
-	@echo "  >  Running golint"
+	@echo "  >  Uruchamianie golint"
 	bin/golangci-lint run --timeout=2m
 
-# Assets commands.
+# Polecenia Assets.
 check: build
 	bin/assets check
 
@@ -50,7 +50,7 @@ fix: build
 update-auto: build
 	bin/assets update-auto
 
-# Helper commands.
+# Polecenia pomocnicze.
 add-token: build
 	bin/assets add-token $(asset_id)
 

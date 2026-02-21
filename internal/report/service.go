@@ -24,5 +24,5 @@ func (s Service) IsFailed() bool {
 }
 
 func (s Service) GetReport() string {
-	return fmt.Sprintf("Total files: %d, errors: %d", s.totalFiles, s.errors)
+	return fmt.Sprintf("Łączna liczba plików: %d, błędy: %d", s.totalFiles, s.errors)
 }

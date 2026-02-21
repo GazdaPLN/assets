@@ -1,12 +1,12 @@
 ---
-name: Question
-about: Any questions related to this repo
+name: Pytanie
+about: Dowolne pytania związane z tym repozytorium
 title: ''
 labels: 'Type: Question'
 assignees: ''
 
 ---
 
-## How can we help ?
+## Jak możemy pomóc?
 
-<!-- Short, concise description of the proposed feature -->
+<!-- Krótki, zwięzły opis proponowanej funkcjonalności -->

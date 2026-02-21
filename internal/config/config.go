@@ -42,10 +42,10 @@ type (
 	}
 )
 
-// Default is a configuration instance.
-var Default = Config{} //nolint:gochecknoglobals // config must be global
+// Default jest instancją konfiguracji.
+var Default = Config{} //nolint:gochecknoglobals // konfiguracja musi być globalna
 
-// SetConfig reads a config file and returs an initialized config instance.
+// SetConfig odczytuje plik konfiguracyjny i zwraca zainicjalizowaną instancję konfiguracji.
 func SetConfig(confPath string) error {
 	confPath, err := filepath.Abs(confPath)
 	if err != nil {

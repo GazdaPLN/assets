@@ -33,20 +33,20 @@ func (s *Service) FixETHAddressChecksum(f *file.AssetFile) error {
 	if err != nil {
 		checksum, e := address.EIP55Checksum(assetDir)
 		if e != nil {
-			return fmt.Errorf("failed to get checksum: %s", e)
+			return fmt.Errorf("nie udało się obliczyć sumy kontrolnej: %s", e)
 		}
 
 		newName := path.GetAssetPath(f.Chain().Handle, checksum)
 
 		if e = os.Rename(f.Path(), newName); e != nil {
-			return fmt.Errorf("failed to rename dir: %s", e)
+			return fmt.Errorf("nie udało się zmienić nazwy katalogu: %s", e)
 		}
 
 		s.fileService.UpdateFile(f, checksum)
 
 		log.WithField("from", assetDir).
 			WithField("to", checksum).
-			Debug("Renamed asset")
+			Debug("Zmieniono nazwę zasobu")
 	}
 
 	return nil
@@ -64,7 +64,7 @@ func (s *Service) FixLogo(f *file.AssetFile) error {
 	}
 
 	if isLogoTooLarge {
-		log.WithField("path", f.Path()).Debug("Fixing too large image")
+		log.WithField("path", f.Path()).Debug("Naprawianie zbyt dużego obrazu")
 
 		targetW, targetH := calculateTargetDimension(width, height)
 
@@ -76,7 +76,7 @@ func (s *Service) FixLogo(f *file.AssetFile) error {
 
 	err = validation.ValidateLogoFileSize(f.Path())
 	if err != nil { //nolint:staticcheck
-		// TODO: Compress images.
+		// TODO: Kompresja obrazów.
 	}
 
 	return nil
@@ -132,13 +132,13 @@ func (s *Service) FixAssetInfo(f *file.AssetFile) error {
 
 	var isModified bool
 
-	// Fix asset type.
+	// Napraw typ zasobu.
 	var assetType string
 	if assetInfo.Type != nil {
 		assetType = *assetInfo.Type
 	}
 
-	// We need to skip error check to fix asset type if it's incorrect or empty.
+	// Pomijamy sprawdzenie błędu, aby naprawić typ zasobu, jeśli jest nieprawidłowy lub pusty.
 	chain, _ := types.GetChainFromAssetType(assetType)
 
 	expectedTokenType, ok := types.GetTokenType(f.Chain().ID, f.Asset())
@@ -154,7 +154,7 @@ func (s *Service) FixAssetInfo(f *file.AssetFile) error {
 		}
 	}
 
-	// Fix asset id.
+	// Napraw id zasobu.
 	assetID := f.Asset()
 	if assetInfo.ID == nil || *assetInfo.ID != assetID {
 		assetInfo.ID = &assetID
@@ -166,7 +166,7 @@ func (s *Service) FixAssetInfo(f *file.AssetFile) error {
 		return err
 	}
 
-	// Fix asset explorer url.
+	// Napraw url eksploratora zasobu.
 	if assetInfo.Explorer == nil || !strings.EqualFold(expectedExplorerURL, *assetInfo.Explorer) {
 		assetInfo.Explorer = &expectedExplorerURL
 		isModified = true

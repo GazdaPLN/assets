@@ -94,8 +94,8 @@ func (s *Service) ValidateImage(f *file.AssetFile) error {
 		compErr.Append(err)
 	}
 
-	// TODO: Replace it with validation.ValidatePngImageDimension when "assets" repo is fixed.
-	// Read comments in ValidatePngImageDimensionForCI.
+	// TODO: Zastąpić przez validation.ValidatePngImageDimension gdy repozytorium "assets" zostanie naprawione.
+	// Przeczytaj komentarze w ValidatePngImageDimensionForCI.
 	err = validation.ValidatePngImageDimensionForCI(f.Path())
 	if err != nil {
 		compErr.Append(err)
