@@ -32,12 +32,12 @@ fmt:
 
 lint-install:
 ifeq (,$(wildcard test -f bin/golangci-lint))
-	@echo "  >  Instalowanie golint"
+	@echo "  >  Instalowanie golangci-lint"
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- v1.50.1
 endif
 
 lint: lint-install
-	@echo "  >  Uruchamianie golint"
+	@echo "  >  Uruchamianie golangci-lint"
 	bin/golangci-lint run --timeout=2m
 
 # Polecenia Assets.

@@ -23,7 +23,7 @@ projekty muszą być wiarygodne, posiadać dostępne informacje oraz __niezerowy
 
 ### Aplikacja Assets
 
-[Aplikacja webowa Assets](https://assets.trustwallet.com) może być używana do większości nowych zgłoszeń tokenów (wymagane jest konto Github).
+[Aplikacja webowa Assets](https://assets.trustwallet.com) może być używana do większości nowych zgłoszeń tokenów (wymagane jest konto GitHub).
 
 ### Szybki start
 
